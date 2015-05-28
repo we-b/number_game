@@ -235,9 +235,10 @@ class ViewController: UIViewController {
             randomnumber_array.sort(){$0 < $1}
             randomnumber_array.append(randomtendigit)
             randomnumber_array.append(randomunitdigit)
-                        for number in randomnumber_array{
+            string = ""
+            for number in randomnumber_array{
                 string = string + String(number)
-                            println(randomnumber_array)
+                
             }
         }
 
@@ -362,7 +363,6 @@ class ViewController: UIViewController {
         let minute = Int(elapsed / 60)
         let second = elapsed % 60
         rightlabel.text = String(format: "%02d:%02.2f", minute, second)
-        println(second)
     }
 //　間違った時
     func wrong(){
@@ -370,8 +370,12 @@ class ViewController: UIViewController {
         wronglabel.text = "Try Again"
         let btn_gameover = newgameButton()
 
-        
-    }
+        }
+
+
+
+
+
 }
 
 

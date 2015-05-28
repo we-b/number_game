@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>63A49013-ABCB-40A5-8CF0-0595794B402E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>number_game1_with_papa</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>635F94B6AF0E765FE934B15A399B77442228C1E2</key>
+		<string>github.com:we-b/number_game.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>number_game1_with_papa/number_game1_with_papa.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>635F94B6AF0E765FE934B15A399B77442228C1E2</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:we-b/number_game.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>635F94B6AF0E765FE934B15A399B77442228C1E2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>635F94B6AF0E765FE934B15A399B77442228C1E2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>number_game</string>
+		</dict>
+	</array>
+</dict>
+</plist>
