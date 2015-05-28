@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     var randomnumber_array = [0,0,0,0,0,0,0]
     var count = 0
     var answer_count = 0
-
+    var starttime = NSDate()
 
 //    乱数を作るか判断
     func start(){
@@ -130,14 +130,14 @@ class ViewController: UIViewController {
         if calculate_array.count != 0{
         hidden_array.last?.hidden = false
             if calculate_array.last?[1].tag == 1{
-                result = result - calculate_array.last![2].tag}
+                result = result - calculate_array.last![0].tag}
             else if calculate_array.last?[1].tag == 2{
-                result = result + calculate_array.last![2].tag}
+                result = result + calculate_array.last![0].tag}
             else if calculate_array.last?[1].tag == 3{
-                result = result / calculate_array.last![2].tag}
+                result = result / calculate_array.last![0].tag}
             else if calculate_array.last?[1].tag == 4{
-                result = result * calculate_array.last![2].tag}
-                var button = calculate_array.last![0] as! CustomButton
+                result = result * calculate_array.last![0].tag}
+                var button = calculate_array.last![2] as! CustomButton
                 button.setTitle(String(result), forState: UIControlState.Normal)
                 button.tag = result
             for content in numbers_array{
@@ -156,6 +156,7 @@ class ViewController: UIViewController {
         answer_count = 0
         numbers_array.removeAll()
         count = 0
+        starttime = NSDate()
         viewDidLoad()
     }
 
@@ -236,6 +237,7 @@ class ViewController: UIViewController {
             randomnumber_array.append(randomunitdigit)
                         for number in randomnumber_array{
                 string = string + String(number)
+                            println(randomnumber_array)
             }
         }
 
@@ -249,24 +251,16 @@ class ViewController: UIViewController {
         number5 = Int(arc4random_uniform(UInt32(6))) + 1
         randomtendigit = Int(arc4random_uniform(UInt32(6))) + 1
         randomunitdigit = Int(arc4random_uniform(UInt32(6))) + 1
-        
-        println(randomnumber_array)
 
     }
-   
-//    var checkrandom_array: [NSArray] = []
-//    
-//    func checkrandom(){
-//        if randomnumber_array.sort().append(randomtendigit).append(randomunitdigit) == chenckrandom_array.content{}
-//    }
-    
+
 //　数字ボタンを押して配列に入れる
     func push(sender: CustomButton) {
         numbers_array.append(sender)
         select()
 
     }
-//    RandomNumber().random_number_array
+
 //計算するかどうかを決める
     func select(){
         if numbers_array[0].check == 1{
@@ -277,29 +271,38 @@ class ViewController: UIViewController {
                     if numbers_array.count >= 3{
                         if numbers_array[2] != numbers_array[0] && numbers_array[2].check == 1{
                             self.numbers_array[2].setTitleColor(UIColor.blueColor(), forState: .Normal)
-                            calculate()}
+                            calculate()
+                        }
                             
                         else{
                             for content in numbers_array{
                                 content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                             }
-                            self.numbers_array.removeAll()}}}
+                            self.numbers_array.removeAll()
+                        }
+                    }
+                }
                 else{
                     for content in numbers_array{
                         content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     }
-                    self.numbers_array.removeAll()}}}
+                    self.numbers_array.removeAll()
+                }
+            }
+        }
             
         else {
             for content in numbers_array{
                 content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
-            self.numbers_array.removeAll()}
+            self.numbers_array.removeAll()
+        }
         
     }
 
 //計算する
     func calculate(){
+        calculate_array.removeAll()
         firstNumber = numbers_array[0].tag
         secondNumber = numbers_array[1].tag
         thirdNumber = numbers_array[2].tag
@@ -331,10 +334,10 @@ class ViewController: UIViewController {
     func process(){
         calculate_array.append(numbers_array)
         answer_count = answer_count + 1
-        hidden_array.append(numbers_array[2])
-        numbers_array.last?.hidden = true
-        numbers_array[0].setTitle(String(result), forState: UIControlState.Normal)
-        numbers_array[0].tag = result
+        hidden_array.append(numbers_array[0])
+        numbers_array[0].hidden = true
+        numbers_array[2].setTitle(String(result), forState: UIControlState.Normal)
+        numbers_array[2].tag = result
 
     }
     
@@ -343,35 +346,32 @@ class ViewController: UIViewController {
 
         if answer_count == 4{
             if randomtendigit*10 + randomunitdigit == result {
-                right()}
+                right()
+            }
             else{
-                wrong()}}
+                wrong()
+            }
+        }
     }
 
 //    合っている時
     func right(){
         let rightlabel = endmessageLabel()
-        rightlabel.text = "Good Job"
         let btn_gameover = newgameButton()
-//　間違った時
+        let elapsed = NSDate().timeIntervalSinceDate(starttime)
+        let minute = Int(elapsed / 60)
+        let second = elapsed % 60
+        rightlabel.text = String(format: "%02d:%02.2f", minute, second)
+        println(second)
     }
+//　間違った時
     func wrong(){
         let wronglabel = endmessageLabel()
         wronglabel.text = "Try Again"
         let btn_gameover = newgameButton()
+
+        
     }
 }
 
-//一回押されたボタンが押されないようにする方法 : back button
-// random数の偏り
-//Optional(<number_game1_with_papa.CustomButton: 0x7fbd72d543f0; baseClass = UIButton; frame = (209.375 308.5; 50 50); hidden = YES; opaque = NO; tag = 3; layer = <CALayer: 0x7fbd72d54620>>)
-//[(
-//    "<number_game1_with_papa.CustomButton: 0x7fbd72d54850; baseClass = UIButton; frame = (68.75 246; 50 50); opaque = NO; tag = 14; layer = <CALayer: 0x7fbd72d54a80>>",
-//    "<number_game1_with_papa.CustomButton: 0x7fbd72d50c30; baseClass = UIButton; frame = (50 475.25; 50 50); opaque = NO; tag = 1; layer = <CALayer: 0x7fbd72d488c0>>",
-//    "<number_game1_with_papa.CustomButton: 0x7fbd72d539b0; baseClass = UIButton; frame = (115.625 308.5; 50 50); hidden = YES; opaque = NO; tag = 5; layer = <CALayer: 0x7fbd72d53be0>>"
-//    ), (
-//        "<number_game1_with_papa.CustomButton: 0x7fbd72d54850; baseClass = UIButton; frame = (68.75 246; 50 50); opaque = NO; tag = 14; layer = <CALayer: 0x7fbd72d54a80>>",
-//        "<number_game1_with_papa.CustomButton: 0x7fbd72d50c30; baseClass = UIButton; frame = (50 475.25; 50 50); opaque = NO; tag = 1; layer = <CALayer: 0x7fbd72d488c0>>",
-//        "<number_game1_with_papa.CustomButton: 0x7fbd72d543f0; baseClass = UIButton; frame = (209.375 308.5; 50 50); hidden = YES; opaque = NO; tag = 3; layer = <CALayer: 0x7fbd72d54620>>"
-//)]
 
