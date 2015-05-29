@@ -71,6 +71,10 @@ class ViewController: UIViewController {
         btn_back.addTarget(self, action: "back:", forControlEvents: .TouchUpInside)
         self.view.addSubview(btn_back)
 
+//        
+//        let ud3 = NSUserDefaults.standardUserDefaults()
+//        ud3.removeObjectForKey("time")
+
 
     
         // Do any additional setup after loading the view, typically from a nib.
@@ -105,7 +109,8 @@ class ViewController: UIViewController {
     var count = 0
     var answer_count = 0
     var starttime = NSDate()
-
+    let array_time = NSUserDefaults.standardUserDefaults()
+    
 //    乱数を作るか判断
     func start(){
         if count == 0{
@@ -362,16 +367,67 @@ class ViewController: UIViewController {
         let elapsed = NSDate().timeIntervalSinceDate(starttime)
         let minute = Int(elapsed / 60)
         let second = elapsed % 60
-        rightlabel.text = String(format: "%02d:%02.2f", minute, second)
+        let intSecond = Int(second)
+        let floatSecond = Int((second - Double(intSecond)) * 100)
+        
+
+        rightlabel.text = String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)
     }
-//　間違った時
+    //　間違った時
+    
+    
+    
     func wrong(){
+        
         let wronglabel = endmessageLabel()
-        wronglabel.text = "Try Again"
+        
+        //        wronglabel.text = "Try Again"
+        
         let btn_gameover = newgameButton()
+        
+        let elapsed = NSDate().timeIntervalSinceDate(starttime)
+        
+        let minute = Int(elapsed / 60)
+        
+        let second = elapsed % 60
+        
+        let intSecond = Int(second)
+        let floatSecond = Int((second - Double(intSecond)) * 100)
+        
+        
+        
+        wronglabel.text = String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)
+        
+        
+        var loadText : Array! = array_time.arrayForKey("time")
+        if loadText == nil{
+        loadText = [elapsed]
+        }
+        else{
+            loadText.append(elapsed)
 
         }
-
+        
+        
+         var loadarray :[Double] = []
+        for content in loadText{
+            loadarray.append(content as! Double)
+        }
+        
+        loadarray.sort(){$0 < $1}
+        // キー: "saveText" , 値: "<textFieldの入力値>" を格納。（idは任意）
+        array_time.setObject(loadText, forKey: "time")
+        array_time.setObject(loadarray, forKey: "sorttime")
+        array_time.synchronize()
+        
+       
+        
+        println(loadText)
+        println(loadarray)
+        
+        
+    }
+ 
 
 
 
