@@ -49,36 +49,45 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         unitdigit.center = CGPointMake(self.view.frame.width/4*3, (self.view.frame.height/2)-self.view.frame.width/3*2/4)
         
         let btn_number4 = configureButton(number4)
-        btn_number4.center = CGPointMake(self.view.frame.width/8*3, (unitdigit.center.y)-self.view.frame.width/3*2/4)
+        btn_number4.center = CGPointMake(self.view.frame.width/8*3, (((self.view.frame.height/2)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
     
         let btn_number5 = configureButton(number5)
-        btn_number5.center = CGPointMake(self.view.frame.width/8*5, (unitdigit.center.y)-self.view.frame.width/3*2/4)
+        btn_number5.center = CGPointMake(self.view.frame.width/8*5, (((self.view.frame.height/2)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
     
         
-        let btn_reload = UIButton()
-        btn_reload.frame.size = CGSizeMake(50, 25)
-        btn_reload.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/16*13)
-        btn_reload.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
+        let btn_reload = functionalButton()
+        btn_reload.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/17*14)
         btn_reload.setTitle(String("reset"), forState: UIControlState.Normal)
         btn_reload.addTarget(self, action: "reload:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(btn_reload)
+       
         
-        let btn_back = UIButton()
-        btn_back.frame.size = CGSizeMake(50, 25)
-        btn_back.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/16*14)
-        btn_back.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
+        let btn_back = functionalButton()
+        btn_back.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/17*15)
         btn_back.setTitle(String("back"), forState: UIControlState.Normal)
         btn_back.addTarget(self, action: "back:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(btn_back)
+        
+        
+        let btn_gameover = newgameButton()
         
         let btn_ranking = UIButton()
         btn_ranking.frame.size = CGSizeMake(100, 25)
-        btn_ranking.center = CGPointMake(self.view.frame.width/8*6, self.view.frame.height/8)
-        btn_ranking.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
-        btn_ranking.setTitle(String("record"), forState: UIControlState.Normal)
+        btn_ranking.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/6)
+        btn_ranking.backgroundColor = UIColor(red:255/255, green:128/255, blue:0/255, alpha:0.7)
+        btn_ranking.setTitle(String("Record"), forState: UIControlState.Normal)
         btn_ranking.addTarget(self, action: "push_ranking:", forControlEvents: .TouchUpInside)
         self.view.addSubview(btn_ranking)
         
+        let btn_howto = UIButton()
+        btn_howto.frame.size = CGSizeMake(100, 25)
+        btn_howto.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/12)
+        btn_howto.backgroundColor = UIColor(red: 102 / 255.0, green: 204 / 255.0, blue: 255 / 255.0, alpha: 0.7)
+        btn_howto.setTitle(String("How To"), forState: UIControlState.Normal)
+        btn_howto.addTarget(self, action: "howto:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(btn_howto)
+        
+            
+            
+
 
 ////
 ////
@@ -92,10 +101,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       
         
     }
+
+    
+    
+    func howto(sender: UIButton){
+        let howtotext = UITextView()
+        let barHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.size.height
+        howtotext.frame = CGRect(x:barHeight,y:self.view.frame.height/12-12.5,width:200,height: self.view.frame.height/12+25 )
+        howtotext.text = "Use all 5 numbers to make the two-digit number: \(randomtendigit*10 + randomunitdigit)"
+        howtotext.textColor = UIColor.grayColor()
+        howtotext.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 1.0, alpha: 1.0)
+        howtotext.font = UIFont(name: "Helvetica", size: 15)
+//        howtotext.textAlignment = NSTextAlignment.Center
+        howtotext.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
+        howtotext.editable = false
+        self.view.addSubview(howtotext)
+    }
+//func animation(){
+//    
+//    UIView.animateWithDuration(3.0, animations: {() -> Void in
+//         self.randomLabel(self.randomunitdigit).center = CGPoint(x: self.view.frame.width/4*3,y: (self.view.frame.height/2)-self.view.frame.width/3*2/4);
+//                }, completion: {(Bool) -> Void in
+//
+//    })
+//    UIView.animateWithDuration(3.0, animations: {() -> Void in
+//      
+//        self.randomLabel(self.randomtendigit).center = CGPoint(x: self.view.frame.width/2,y: (self.view.frame.height/2)-self.view.frame.width/3*2/4);
+//        }, completion: {(Bool) -> Void in
+//            
+//    })
+//   }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
     
 //    乱数プロパティ
     var number1 = 0
@@ -217,8 +259,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func endmessageLabel() ->UILabel{
         let labels = UILabel()
         labels.frame.size = CGSizeMake(100, 25)
-        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/7)
-        labels.backgroundColor = UIColor(red: 255 / 255.0, green: 204 / 255.0, blue: 102 / 255.0, alpha: 1.0)
+        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/5)
+        labels.backgroundColor = UIColor.grayColor()
         labels.textColor = UIColor.whiteColor()
         labels.textAlignment = NSTextAlignment.Center
         self.view.addSubview(labels)
@@ -229,12 +271,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func newgameButton() -> UIButton{
         let btn_newgame = UIButton()
         btn_newgame.frame.size = CGSizeMake(100, 25)
-        btn_newgame.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/5)
-        btn_newgame.backgroundColor = UIColor.grayColor()
-        btn_newgame.setTitle(String("New game"), forState: UIControlState.Normal)
+        btn_newgame.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/8)
+        btn_newgame.backgroundColor = UIColor(red:255/255, green:102/255, blue:102/255, alpha:0.8)
+        btn_newgame.setTitle(String("New Game"), forState: UIControlState.Normal)
         btn_newgame.addTarget(self, action: "restart:", forControlEvents: .TouchUpInside)
         self.view.addSubview(btn_newgame)
         return btn_newgame
+    }
+    
+    // back, reset ボタン
+    func functionalButton() ->UIButton{
+        let buttons = UIButton()
+        buttons.frame.size = CGSizeMake(50, 25)
+        buttons.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
+        self.view.addSubview(buttons)
+        return buttons
     }
     
 //    乱数を作るメソッド
@@ -392,7 +443,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         wronglabel.text = "Try Again"
         
-        let btn_gameover = newgameButton()
+        
         
     }
 
@@ -425,15 +476,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return loadText
     }
 //    記録の表示を整える
-    func time_to_rank(){
+    func time_to_rank() {
         loadText = show_time()
+       
         for content in loadText{
             let minute = Int(content / 60)
             let second = content % 60
             let intSecond = Int(second)
             let floatSecond = Int((second - Double(intSecond)) * 100)
-            time_to_rank_array.append(String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond))
+            if loadText.count > time_to_rank_array.count{
+            time_to_rank_array.append((String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)))
+            }
+            
         }
+    
     }
     
 //    レコード表示
@@ -447,8 +503,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 //    TableView形成
         func show_ranking(){
-        let barHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.size.height
-        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: self.view.frame.width, height: self.view.frame.height))
+        myTableView = UITableView(frame: CGRect(x: 0, y: self.view.frame.height/4, width: self.view.frame.width, height: self.view.frame.height))
         
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -476,7 +531,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //セルの高さ
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(60)
+        return CGFloat(44)
     }
     
     //セクションのタイトル
@@ -486,7 +541,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //セクションのタイトルの高さ
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(44)
+        return CGFloat(30)
     }
 }
 
