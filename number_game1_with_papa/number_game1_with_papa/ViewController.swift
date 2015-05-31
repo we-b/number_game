@@ -9,7 +9,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 
     override func viewDidLoad() {
@@ -70,8 +70,18 @@ class ViewController: UIViewController {
         btn_back.setTitle(String("back"), forState: UIControlState.Normal)
         btn_back.addTarget(self, action: "back:", forControlEvents: .TouchUpInside)
         self.view.addSubview(btn_back)
+        
+        let btn_ranking = UIButton()
+        btn_ranking.frame.size = CGSizeMake(100, 25)
+        btn_ranking.center = CGPointMake(self.view.frame.width/8*6, self.view.frame.height/8)
+        btn_ranking.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
+        btn_ranking.setTitle(String("record"), forState: UIControlState.Normal)
+        btn_ranking.addTarget(self, action: "push_ranking:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(btn_ranking)
+        
 
-//        
+////
+////
 //        let ud3 = NSUserDefaults.standardUserDefaults()
 //        ud3.removeObjectForKey("time")
 
@@ -109,7 +119,7 @@ class ViewController: UIViewController {
     var count = 0
     var answer_count = 0
     var starttime = NSDate()
-    let array_time = NSUserDefaults.standardUserDefaults()
+
     
 //    乱数を作るか判断
     func start(){
@@ -127,10 +137,9 @@ class ViewController: UIViewController {
             numbers_array.removeAll()
             viewDidLoad()
 
-//        self.reload(sender)
     }
     
-//    一回もどる（修正要）
+//    一回もどる
     func back(sender: UIButton){
         if calculate_array.count != 0{
         hidden_array.last?.hidden = false
@@ -208,7 +217,7 @@ class ViewController: UIViewController {
     func endmessageLabel() ->UILabel{
         let labels = UILabel()
         labels.frame.size = CGSizeMake(100, 25)
-        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/5)
+        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/7)
         labels.backgroundColor = UIColor(red: 255 / 255.0, green: 204 / 255.0, blue: 102 / 255.0, alpha: 1.0)
         labels.textColor = UIColor.whiteColor()
         labels.textAlignment = NSTextAlignment.Center
@@ -220,7 +229,7 @@ class ViewController: UIViewController {
     func newgameButton() -> UIButton{
         let btn_newgame = UIButton()
         btn_newgame.frame.size = CGSizeMake(100, 25)
-        btn_newgame.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/4)
+        btn_newgame.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/5)
         btn_newgame.backgroundColor = UIColor.grayColor()
         btn_newgame.setTitle(String("New game"), forState: UIControlState.Normal)
         btn_newgame.addTarget(self, action: "restart:", forControlEvents: .TouchUpInside)
@@ -232,7 +241,6 @@ class ViewController: UIViewController {
     func makenumber_check(){
         var checkarray = RandomNumber().random_number_array
         var string = "0000000"
-       println(find(checkarray, string))
         
         while find(checkarray, string) != nil{
             makenumber()
@@ -353,6 +361,7 @@ class ViewController: UIViewController {
         if answer_count == 4{
             if randomtendigit*10 + randomunitdigit == result {
                 right()
+                save_time()
             }
             else{
                 wrong()
@@ -361,7 +370,7 @@ class ViewController: UIViewController {
     }
 
 //    合っている時
-    func right(){
+    func right() ->NSTimeInterval {
         let rightlabel = endmessageLabel()
         let btn_gameover = newgameButton()
         let elapsed = NSDate().timeIntervalSinceDate(starttime)
@@ -370,68 +379,117 @@ class ViewController: UIViewController {
         let intSecond = Int(second)
         let floatSecond = Int((second - Double(intSecond)) * 100)
         
-
         rightlabel.text = String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)
+        return elapsed
+        
     }
     //　間違った時
-    
     
     
     func wrong(){
         
         let wronglabel = endmessageLabel()
         
-        //        wronglabel.text = "Try Again"
+        wronglabel.text = "Try Again"
         
         let btn_gameover = newgameButton()
         
-        let elapsed = NSDate().timeIntervalSinceDate(starttime)
+    }
+
+    let array_time = NSUserDefaults.standardUserDefaults()
+    var loadText:[Double] = []
+     var time_to_rank_array :[String] = []
+    
+//   記録を保存
+    func save_time(){
         
-        let minute = Int(elapsed / 60)
-        
-        let second = elapsed % 60
-        
-        let intSecond = Int(second)
-        let floatSecond = Int((second - Double(intSecond)) * 100)
-        
-        
-        
-        wronglabel.text = String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)
-        
-        
-        var loadText : Array! = array_time.arrayForKey("time")
-        if loadText == nil{
-        loadText = [elapsed]
+        let elapsed = right()
+        if array_time.arrayForKey("time") == nil{
+            loadText = [elapsed]
         }
         else{
+            loadText = array_time.arrayForKey("time") as! [Double]
             loadText.append(elapsed)
-
         }
-        
-        
-         var loadarray :[Double] = []
-        for content in loadText{
-            loadarray.append(content as! Double)
-        }
-        
-        loadarray.sort(){$0 < $1}
-        // キー: "saveText" , 値: "<textFieldの入力値>" を格納。（idは任意）
         array_time.setObject(loadText, forKey: "time")
-        array_time.setObject(loadarray, forKey: "sorttime")
         array_time.synchronize()
+        show_time()
+    }
+    
+//    記録を読み込む・sort
+    func show_time() ->[Double]{
+        if array_time.arrayForKey("time") != nil{
+            loadText = array_time.arrayForKey("time") as! [Double]
+        }
+        loadText.sort(){$0 < $1}
+        return loadText
+    }
+//    記録の表示を整える
+    func time_to_rank(){
+        loadText = show_time()
+        for content in loadText{
+            let minute = Int(content / 60)
+            let second = content % 60
+            let intSecond = Int(second)
+            let floatSecond = Int((second - Double(intSecond)) * 100)
+            time_to_rank_array.append(String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond))
+        }
+    }
+    
+//    レコード表示
+    var myTableView: UITableView!
+    
+//    レコード読み込み
+    func push_ranking(sender: UIButton)  {
+        time_to_rank()
+        show_ranking()
+    }
+    
+//    TableView形成
+        func show_ranking(){
+        let barHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.size.height
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: self.view.frame.width, height: self.view.frame.height))
         
-       
-        
-        println(loadText)
-        println(loadarray)
-        
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        self.view.addSubview(myTableView)
         
     }
- 
-
-
-
-
+    
+//    セールの数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if time_to_rank_array.count < 10{
+            return time_to_rank_array.count
+        }
+        else{
+            return 10
+        }
+    }
+//    セールの内容
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "myCell")
+        cell.textLabel?.text = "\((indexPath.row)+1) "
+        cell.detailTextLabel?.text = "\(time_to_rank_array[indexPath.row])"
+        return cell
+        
+    }
+    
+    //セルの高さ
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return CGFloat(60)
+    }
+    
+    //セクションのタイトル
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Ranking"
+    }
+    
+    //セクションのタイトルの高さ
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(44)
+    }
 }
+
+
 
 
