@@ -34,35 +34,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         btn_division.setTitle("÷", forState: UIControlState.Normal)
         
         let btn_number1 = configureButton(number1)
-        btn_number1.center = CGPointMake(self.view.frame.width/8*3, self.view.frame.height/2)
+        btn_number1.center = CGPointMake(self.view.frame.width/8*3, self.view.frame.height/8*5)
         
         let btn_number2 = configureButton(number2)
-        btn_number2.center = CGPointMake(self.view.frame.width/8*5, self.view.frame.height/2)
+        btn_number2.center = CGPointMake(self.view.frame.width/8*5, self.view.frame.height/8*5)
         
         let btn_number3 = configureButton(number3)
-        btn_number3.center = CGPointMake(self.view.frame.width/4, (self.view.frame.height/2)-self.view.frame.width/3*2/4)
+        btn_number3.center = CGPointMake(self.view.frame.width/4, (self.view.frame.height/8*5)-self.view.frame.width/3*2/4)
         
         let tensdigit = randomLabel(randomtendigit)
-        tensdigit.center = CGPointMake(self.view.frame.width/2, (self.view.frame.height/2)-self.view.frame.width/3*2/4)
+        tensdigit.center = CGPointMake(self.view.frame.width/2, (self.view.frame.height/8*5)-self.view.frame.width/3*2/4)
         
         let unitdigit = randomLabel(randomunitdigit)
-        unitdigit.center = CGPointMake(self.view.frame.width/4*3, (self.view.frame.height/2)-self.view.frame.width/3*2/4)
+        unitdigit.center = CGPointMake(self.view.frame.width/4*3, (self.view.frame.height/8*5)-self.view.frame.width/3*2/4)
         
         let btn_number4 = configureButton(number4)
-        btn_number4.center = CGPointMake(self.view.frame.width/8*3, (((self.view.frame.height/2)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
+        btn_number4.center = CGPointMake(self.view.frame.width/8*3, (((self.view.frame.height/8*5)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
     
         let btn_number5 = configureButton(number5)
-        btn_number5.center = CGPointMake(self.view.frame.width/8*5, (((self.view.frame.height/2)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
+        btn_number5.center = CGPointMake(self.view.frame.width/8*5, (((self.view.frame.height/8*5)-self.view.frame.width/3*2/4))-self.view.frame.width/3*2/4)
     
         
         let btn_reload = functionalButton()
-        btn_reload.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/17*14)
+        btn_reload.center = CGPointMake(self.view.frame.width/5*3, self.view.frame.height/4*3 + 75)
         btn_reload.setTitle(String("reset"), forState: UIControlState.Normal)
         btn_reload.addTarget(self, action: "reload:", forControlEvents: .TouchUpInside)
        
         
         let btn_back = functionalButton()
-        btn_back.center = CGPointMake(self.view.frame.width/8*7, self.view.frame.height/17*15)
+        btn_back.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/4*3 + 75)
         btn_back.setTitle(String("back"), forState: UIControlState.Normal)
         btn_back.addTarget(self, action: "back:", forControlEvents: .TouchUpInside)
         
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let btn_ranking = UIButton()
         btn_ranking.frame.size = CGSizeMake(100, 25)
-        btn_ranking.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/6)
+        btn_ranking.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/4)
         btn_ranking.backgroundColor = UIColor(red:255/255, green:128/255, blue:0/255, alpha:0.7)
         btn_ranking.setTitle(String("Record"), forState: UIControlState.Normal)
         btn_ranking.addTarget(self, action: "push_ranking:", forControlEvents: .TouchUpInside)
@@ -89,7 +89,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
 
 
-////
+//
 ////
 //        let ud3 = NSUserDefaults.standardUserDefaults()
 //        ud3.removeObjectForKey("time")
@@ -107,13 +107,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func howto(sender: UIButton){
         let howtotext = UITextView()
         let barHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.size.height
-        howtotext.frame = CGRect(x:barHeight,y:self.view.frame.height/12-12.5,width:200,height: self.view.frame.height/12+25 )
-        howtotext.text = "Use all 5 numbers to make the two-digit number: \(randomtendigit*10 + randomunitdigit)"
+        howtotext.frame = CGRect(x:barHeight,y:self.view.frame.height/12-12.5,width:175,height: self.view.frame.height/6+25 )
+        howtotext.text = "Use all 5 numbers to make the two-digit number: \(randomtendigit*10 + randomunitdigit)\n 1. Tap Number \n 2. Tap (+ - x ÷) \n 3. Tap Number"
         howtotext.textColor = UIColor.grayColor()
         howtotext.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 1.0, alpha: 1.0)
         howtotext.font = UIFont(name: "Helvetica", size: 15)
 //        howtotext.textAlignment = NSTextAlignment.Center
-        howtotext.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
+        howtotext.textContainerInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         howtotext.editable = false
         self.view.addSubview(howtotext)
     }
@@ -192,7 +192,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             else if calculate_array.last?[1].tag == 3{
                 result = result / calculate_array.last![0].tag}
             else if calculate_array.last?[1].tag == 4{
-                result = result * calculate_array.last![0].tag}
+                result = calculate_array.last![0].tag / result}
                 var button = calculate_array.last![2] as! CustomButton
                 button.setTitle(String(result), forState: UIControlState.Normal)
                 button.tag = result
@@ -223,7 +223,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         buttons.check = 1
         buttons.tag = tag
         buttons.frame.size = CGSizeMake(50, 50)
-        buttons.backgroundColor = UIColor(red: 102 / 255.0, green: 255 / 255.0, blue: 102 / 255.0, alpha: 1.0)
+        buttons.backgroundColor = UIColor(red:204/255, green:102/255, blue:255/255, alpha:1.0)
         buttons.addTarget(self, action: "push:", forControlEvents: .TouchUpInside)
         buttons.setTitle(String(buttons.tag), forState: UIControlState.Normal)
         self.view.addSubview(buttons)
@@ -235,7 +235,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let labels = UILabel()
         labels.tag = tag
         labels.frame.size = CGSizeMake(50, 50)
-        labels.backgroundColor = UIColor(red: 255 / 255.0, green: 255 / 255.0, blue: 102 / 255.0, alpha: 1.0)
+        labels.backgroundColor = UIColor(red:0/255, green:255/255, blue:128/255, alpha:0.7)
         labels.textColor = UIColor.blackColor()
         labels.textAlignment = NSTextAlignment.Center
         labels.text = String(labels.tag)
@@ -259,7 +259,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func endmessageLabel() ->UILabel{
         let labels = UILabel()
         labels.frame.size = CGSizeMake(100, 25)
-        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/5)
+        labels.center = CGPointMake(self.view.frame.width/2, self.view.frame.height/4)
         labels.backgroundColor = UIColor.grayColor()
         labels.textColor = UIColor.whiteColor()
         labels.textAlignment = NSTextAlignment.Center
@@ -271,7 +271,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func newgameButton() -> UIButton{
         let btn_newgame = UIButton()
         btn_newgame.frame.size = CGSizeMake(100, 25)
-        btn_newgame.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/8)
+        btn_newgame.center = CGPointMake(self.view.frame.width/5*4, self.view.frame.height/6)
         btn_newgame.backgroundColor = UIColor(red:255/255, green:102/255, blue:102/255, alpha:0.8)
         btn_newgame.setTitle(String("New Game"), forState: UIControlState.Normal)
         btn_newgame.addTarget(self, action: "restart:", forControlEvents: .TouchUpInside)
@@ -283,7 +283,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func functionalButton() ->UIButton{
         let buttons = UIButton()
         buttons.frame.size = CGSizeMake(50, 25)
-        buttons.backgroundColor = UIColor(red: 255/255.0, green: 204/255.0, blue: 102/255.0, alpha: 1.0)
+        buttons.backgroundColor = UIColor(red:102/255, green:102/255, blue:255/255, alpha:1.0)
         self.view.addSubview(buttons)
         return buttons
     }
@@ -329,19 +329,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //計算するかどうかを決める
     func select(){
         if numbers_array[0].check == 1{
-            self.numbers_array[0].setTitleColor(UIColor.blueColor(), forState: .Normal)
+            self.numbers_array[0].layer.borderColor = UIColor.redColor().CGColor
+            self.numbers_array[0].layer.borderWidth = 1.0
             if numbers_array.count >= 2{
                 if numbers_array[1].check == 2{
-                    self.numbers_array[1].setTitleColor(UIColor.blueColor(), forState: .Normal)
+                    self.numbers_array[1].layer.borderColor = UIColor.redColor().CGColor
+                    self.numbers_array[1].layer.borderWidth = 1.0
                     if numbers_array.count >= 3{
                         if numbers_array[2] != numbers_array[0] && numbers_array[2].check == 1{
-                            self.numbers_array[2].setTitleColor(UIColor.blueColor(), forState: .Normal)
+                            self.numbers_array[2].layer.borderColor = UIColor.redColor().CGColor
+                            self.numbers_array[2].layer.borderWidth = 1.0
                             calculate()
                         }
                             
                         else{
                             for content in numbers_array{
-                                content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                                content.layer.borderColor = content.backgroundColor?.CGColor
                             }
                             self.numbers_array.removeAll()
                         }
@@ -349,7 +352,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else{
                     for content in numbers_array{
-                        content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                        content.layer.borderColor = content.backgroundColor?.CGColor
+                        content.layer.borderWidth = 0.0
                     }
                     self.numbers_array.removeAll()
                 }
@@ -358,7 +362,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         else {
             for content in numbers_array{
-                content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                content.layer.borderColor = content.backgroundColor?.CGColor
+                content.layer.borderWidth = 0.0
             }
             self.numbers_array.removeAll()
         }
@@ -388,7 +393,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
              process()
         }
         for content in numbers_array{
-            content.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            content.layer.borderColor = content.backgroundColor?.CGColor
+            content.layer.borderWidth = 0.0
         }
         numbers_array.removeAll()
         answer()
@@ -478,18 +484,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //    記録の表示を整える
     func time_to_rank() {
         loadText = show_time()
-       
+       time_to_rank_array.removeAll()
+          
         for content in loadText{
             let minute = Int(content / 60)
             let second = content % 60
             let intSecond = Int(second)
             let floatSecond = Int((second - Double(intSecond)) * 100)
-            if loadText.count > time_to_rank_array.count{
             time_to_rank_array.append((String(format: "%02d:%02d.%02d", minute, intSecond, floatSecond)))
-            }
-            
+            println(loadText)
+            println(time_to_rank_array)
         }
-    
     }
     
 //    レコード表示
@@ -503,7 +508,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 //    TableView形成
         func show_ranking(){
-        myTableView = UITableView(frame: CGRect(x: 0, y: self.view.frame.height/4, width: self.view.frame.width, height: self.view.frame.height))
+        myTableView = UITableView(frame: CGRect(x: 0, y: self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height))
         
         myTableView.delegate = self
         myTableView.dataSource = self
